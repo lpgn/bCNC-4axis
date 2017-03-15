@@ -1009,6 +1009,9 @@ class Sender:
 								CNC.vars["wx"] = round(CNC.vars["mx"]-CNC.vars["wcox"], CNC.digits)
 								CNC.vars["wy"] = round(CNC.vars["my"]-CNC.vars["wcoy"], CNC.digits)
 								CNC.vars["wz"] = round(CNC.vars["mz"]-CNC.vars["wcoz"], CNC.digits)
+								if len(word) > 4:
+									CNC.vars["ma"] = float(word[4])
+									CNC.vars["wa"] = round(CNC.vars["ma"]-CNC.vars["wcoa"], CNC.digits)
 								self._posUpdate = True
 							elif word[0] == "F":
 								CNC.vars["curfeed"] = float(word[1])
@@ -1021,11 +1024,13 @@ class Sender:
 							elif word[0] == "Ov":
 								CNC.vars["OvFeed"]    = int(word[1])
 								CNC.vars["OvRapid"]   = int(word[2])
-								CNC.vars["OvSpindle"] = int(word[2])
+								CNC.vars["OvSpindle"] = int(word[3])
 							elif word[0] == "WCO":
 								CNC.vars["wcox"] = float(word[1])
 								CNC.vars["wcoy"] = float(word[2])
 								CNC.vars["wcoz"] = float(word[3])
+								if len(word) > 4:
+									CNC.vars["wcoa"] = float(word[4])
 
 						# Machine is Idle buffer is empty stop waiting and go on
 						if wait and not cline and fields[0]=="Idle":
